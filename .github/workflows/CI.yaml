@@ -1,0 +1,65 @@
+name: Workshop_CI_24
+
+on: 
+  pull_request:
+
+  push:
+      branches: [main]
+
+jobs:
+    linter: 
+      runs-on: [ubuntu-latest]
+
+      steps:
+        - name: clone repository
+          uses: actions/checkout@v4
+
+        - name: Setup Flutter
+          uses: subsito/flutter-action@v2
+
+          with:
+            channel: stable
+            flutter: cinescope/pubspec.yaml
+            flutter-version: 3.13.7
+            cache: true
+
+        - run: dart format . --set-exit-changed
+    
+    format:
+      name: Formatter
+      runs-on: ubuntu-latest
+      steps:
+        - name: clone repository
+          uses: actions/checkout@v4
+        
+        - name: Setup Flutter
+          uses: subsito/flutter-action@v2
+          
+          with:
+            channel: stable
+            flutter: cinescope/pubspec.yaml
+            flutter-version: 3.13.7
+            cache: true
+
+        - run: flutter anylise
+
+
+
+    Run_test:
+      name: Run-test
+      runs-on: ubuntu-latest
+      steps:
+        - name: clone repository
+          uses: actions/checkout@v4
+
+        - name: Setup Flutter
+          uses: subsito/flutter-action@v2
+
+          with:
+            channel: stable
+            flutter: cinescope/pubspec.yaml
+            flutter-version: 3.13.7
+            cache: true
+
+        - run: flutter test
+      
